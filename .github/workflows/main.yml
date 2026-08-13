@@ -15,7 +15,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
             go-version: '1.26.5'
-      - name: Build
+      - name: Build-backend
+        working-directory: backend
         run: go build ./...
-      - name: Test
+      - name: Build-frontend
+        working-directory: frontend
+        run: go build ./...
+      - name: Test-frontend
+        working-directory: frontend
         run: go test ./...
