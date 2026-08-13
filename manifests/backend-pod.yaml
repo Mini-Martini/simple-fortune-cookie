@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: frontend
+  name: backend
 spec:
   containers:
-  - name: frontend
-    image: qkmartin123/frontend-app:latest
+  - name: backend
+    image: qkmartin123/backend-app:latest
     ports:
     - containerPort: 8080
