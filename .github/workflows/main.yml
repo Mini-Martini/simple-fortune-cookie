@@ -24,3 +24,28 @@ jobs:
       - name: Test-frontend
         working-directory: frontend
         run: go test -buildvcs=false ./...
+  Docker-push:
+    runs-on: ubuntu-latest
+    needs: Build-and-test
+    steps:
+      - uses: auctions/checkout@v4
+
+      - name: Login to docker hub
+        uses: docker/login-action@v3
+        with: 
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN}}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend-app:latest
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend-app:latest
